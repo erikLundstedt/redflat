@@ -39,6 +39,7 @@ local default_style = {
 	color         = { main = "#b1222b", wibox = "#202020", gray = "#575757",
 	                  text = "#aaaaaa", icon = "#a0a0a0", urgent = "#32882d" }
 }
+themeColorMain="#575757"
 
 local default_mark_style = {
 	size  = 20,
@@ -88,8 +89,8 @@ end
 -----------------------------------------------------------------------------------------------------------------------
 function titlebar.new(c, style)
 	if not titlebar.list[c] then titlebar.list[c] = {} end
-	style = redutil.table.merge(default_style, style or {})
-
+	--style = redutil.table.merge(default_style, style or {})
+	style=default_style
 	-- Make sure that there is never more than one titlebar for any given client
 	local ret
 	if not titlebar.list[c][style.position] then
@@ -294,7 +295,7 @@ function titlebar.mark.base(_, style)
 
 	-- build widget
 	local widg = wibox.widget.base.make_widget()
-	widg._data = { color = style.color.gray }
+	widg._data = { color = themeColorMain }
 	widg._style = redutil.table.merge(default_mark_style, style or {})
 
 	-- widget setup
@@ -317,7 +318,8 @@ function titlebar.mark.base(_, style)
 
 	-- user function
 	function widg:set_active(active)
-		self._data.color = active and style.color.main or style.color.gray
+		--self._data.color = active and style.color.main or themeColorMain
+		self._data.color = themeColorMain
 		self:emit_signal("widget::redraw_needed")
 	end
 
